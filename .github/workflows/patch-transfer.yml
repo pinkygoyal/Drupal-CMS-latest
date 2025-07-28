@@ -1,0 +1,59 @@
+name: Transfer Patch Workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_repo:
+        description: 'Source repository (e.g. username/repoA)'
+        required: true
+        type: string
+      target_repo:
+        description: 'Target repository (e.g. username/repoB)'
+        required: true
+        type: string
+      start_commit:
+        description: 'Start commit SHA or ref'
+        required: true
+        type: string
+      end_commit:
+        description: 'End commit SHA or ref'
+        required: true
+        type: string
+
+jobs:
+  transfer-patch:
+    runs-on: ubuntu-latest
+    env:
+      PAT: ${{ secrets.PUSH_TOKEN }}
+
+    steps:
+      - name: Checkout Source Repo
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ inputs.source_repo }}
+          token: ${{ secrets.PUSH_TOKEN }}
+          path: source-repo
+
+      - name: Checkout Target Repo
+        uses: actions/checkout@v3
+        with:
+          repository: ${{ inputs.target_repo }}
+          token: ${{ secrets.PUSH_TOKEN }}
+          path: target-repo
+
+      - name: Generate patch files
+        run: |
+          cd source-repo
+          git format-patch ${{ inputs.start_commit }}^..${{ inputs.end_commit }} --stdout > ../patch.diff
+
+      - name: Apply patches to target repo
+        run: |
+          cd target-repo
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git am < ../patch.diff
+
+      - name: Push changes to target repo
+        run: |
+          cd target-repo
+          git push https://x-access-token:${{ secrets.PUSH_TOKEN }}@github.com/${{ inputs.target_repo }}.git
