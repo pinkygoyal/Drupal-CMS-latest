@@ -1,4 +1,6 @@
 name: Deploy Cherry-Pick to Mirror Repo
+permissions:
+  contents: write
 on:
   workflow_dispatch:
     inputs:
