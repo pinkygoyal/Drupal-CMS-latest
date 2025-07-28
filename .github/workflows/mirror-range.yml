@@ -1,7 +1,7 @@
 name: Mirror Commit Range
 on:
   workflow_dispatch:  # Manual trigger
-  inputs:
+    inputs:
       start_commit:
         description: 'Start commit SHA'
         required: true
