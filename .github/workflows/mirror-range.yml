@@ -26,6 +26,11 @@ jobs:
         run: |
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
+          
+      - name: Generate patches from commit range
+        run: |
+          mkdir patches
+          git format-patch ${{ github.event.inputs.start_commit }}^..${{ github.event.inputs.end_commit }} -o patches/
 
       - name: Filter commit range
         run: |
