@@ -31,11 +31,11 @@ jobs:
       - name: Filter commit range
         run: |
           git checkout -b mirror-range
-          git cherry-pick <start_commit_sha>^..<end_commit_sha>
+          git cherry-pick ${{ github.event.inputs.start_commit }}^..${{ github.event.inputs.end_commit }}
 
       - name: Push to target repo
         env:
-          TARGET_REPO: git@github.com:your-username/target-repo.git
+          TARGET_REPO: git@github.com:pinkygoyal/Drupal-CMS-latest2.git
         run: |
           git remote add mirror $TARGET_REPO
           git push mirror mirror-range
