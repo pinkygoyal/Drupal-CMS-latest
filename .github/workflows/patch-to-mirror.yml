@@ -1,6 +1,6 @@
-name: Deploy Cherry-Pick to Mirror Repo
 permissions:
   contents: write
+name: Deploy Cherry-Pick to Mirror Repo
 on:
   workflow_dispatch:
     inputs:
@@ -35,7 +35,7 @@ jobs:
         env:
           MIRROR_PAT: ${{ secrets.MIRROR_PAT }}
         run: |
-          git clone https://pinkygoyal:${MIRROR_PAT}@github.com/pinkygoyal/Drupal-CMS-latest2.git mirror-repo
+          git clone https://pinkygoyal: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@github.com/pinkygoyal/Drupal-CMS-latest2.git mirror-repo
           cd mirror-repo
           git checkout ${{ github.event.inputs.target_branch }}
           
