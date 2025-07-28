@@ -2,6 +2,17 @@ name: Mirror Commit Range
 
 on:
   workflow_dispatch:  # Manual trigger
+  inputs:
+      start_commit:
+        description: 'Start commit SHA'
+        required: true
+      end_commit:
+        description: 'End commit SHA'
+        required: true
+      target_branch:
+        description: 'Branch to push to in mirror repo'
+        default: 'main'
+        required: true
 
 jobs:
   mirror:
