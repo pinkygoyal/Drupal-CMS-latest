@@ -1,5 +1,4 @@
 name: Mirror Commit Range
-
 on:
   workflow_dispatch:  # Manual trigger
   inputs:
