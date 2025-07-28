@@ -40,8 +40,8 @@ jobs:
           git checkout ${{ github.event.inputs.target_branch }}
           
           # Set up Git identity in mirror-repo
-          git config user.name "pinkygoyal"
-          git config user.email "pinky.goyal@capgemini.com"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
     
           # Apply patches
           for patch in ../patches/*.patch; do
